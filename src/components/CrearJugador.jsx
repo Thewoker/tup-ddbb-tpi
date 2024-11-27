@@ -13,13 +13,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -29,7 +22,7 @@ const formSchema = z.object({
   lastname: z.string().min(2, {
     message: "Lastname must be at least 2 characters.",
   }),
-  dni: z.string().number({
+  dni: z.string().min(2, {
     message: "DNI must be at least 2 characters.",
   }),
   telefono: z.string().min(2, {
@@ -41,14 +34,14 @@ const formSchema = z.object({
   foto: z.string().url({
     message: "Tiene que ser un URL",
   }),
-  numSocio: z.string()({
-    message: "",
+  numSocio: z.string().min(1, {
+    message: "Numero de socio no puede estar vacío",
   }),
   categoria: z.string().min(2, {
     message: "Categoria",
   }),
   direccion: z.string().min(2, {
-    message: "",
+    message: "Direccion",
   }),
 });
 
@@ -68,7 +61,7 @@ export default function CrearJugador() {
 
   function onSubmit(values) {
     toast({
-      title: "Equipo agregado",
+      title: "Jugador Agregado",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">
@@ -78,6 +71,7 @@ export default function CrearJugador() {
       ),
     });
   }
+
   return (
     <Form {...form}>
       <form
@@ -102,7 +96,7 @@ export default function CrearJugador() {
         />
         <FormField
           control={form.control}
-          name="Lastname"
+          name="lastname"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Lastname</FormLabel>
@@ -130,7 +124,7 @@ export default function CrearJugador() {
                 />
               </FormControl>
               <FormDescription>
-                This is your public displa DNI.
+                This is your public display DNI.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -162,7 +156,7 @@ export default function CrearJugador() {
                 <Input placeholder="categoria" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display Telefono.
+                This is your public display Categoria.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -170,10 +164,10 @@ export default function CrearJugador() {
         />
         <FormField
           control={form.control}
-          name="Foto"
+          name="foto"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Categoria</FormLabel>
+              <FormLabel>Foto</FormLabel>
               <FormControl>
                 <Input placeholder="Agregar URL" {...field} />
               </FormControl>
@@ -189,7 +183,7 @@ export default function CrearJugador() {
           name="numSocio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Categoria</FormLabel>
+              <FormLabel>Numero de Socio</FormLabel>
               <FormControl>
                 <Input placeholder="Numero de socio" {...field} />
               </FormControl>
@@ -210,7 +204,7 @@ export default function CrearJugador() {
                 <Input placeholder="Direccion" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display Foto.
+                This is your public display Direccion.
               </FormDescription>
               <FormMessage />
             </FormItem>
