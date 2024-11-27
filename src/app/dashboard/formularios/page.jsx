@@ -1,6 +1,7 @@
 import { AgregarArbitroForm } from "@/components/AgregarArbitroForm";
 import { AgregarCanchaForm } from "@/components/AgregarCancha"
 import { AgregarEquipoForm } from "@/components/AgregarEquipo"
+import { AgregarJugadorForm } from "@/components/AgregarJugador";
 
 export default function Home() {
     return (
@@ -21,6 +22,11 @@ export default function Home() {
                 <section className="mb-12">
                     <h2 className="text-2xl font-bold mb-4">Agregar Equipo</h2>
                     <AgregarEquipoForm />
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-2xl font-bold mb-4">Agregar Jugador</h2>
+                    <AgregarJugadorForm />
                 </section>
             </div>
         </main>
