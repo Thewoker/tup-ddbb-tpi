@@ -1,10 +1,10 @@
 import mssql from 'mssql';
 
 const conn = {
-    server: 'tpi-gaona-futbol-leofjr.database.windows.net',
-    database: 'tpi-gaona-futbol-leofjr',
-    user: 'Userfutbol',
-    password: 'bolful_2024',
+    server: process.env.SERVERNAME,
+    database: process.env.DATABASENAME,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
     options: {
         encrypt: true,
         trustServerCertificate: true
