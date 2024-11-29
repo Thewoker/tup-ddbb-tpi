@@ -18,6 +18,7 @@ export default function PlayerForm() {
   });
   const [message, setMessage] = useState("");
   const [equipos, setEquipos] = useState([]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -27,6 +28,33 @@ export default function PlayerForm() {
           ? parseInt(value) || ""
           : value,
     }));
+
+    if (name === "fechaNacimiento") {
+      const categoria = calcularCategoria(value);
+      setFormData((prevState) => ({
+        ...prevState,
+        categoria,
+      }));
+    }
+  };
+
+  const calcularCategoria = (fechaNacimiento) => {
+    const hoy = new Date();
+    const fechaNac = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - fechaNac.getFullYear();
+    const mes = hoy.getMonth() - fechaNac.getMonth();
+
+    if (
+      mes < 0 ||
+      (mes === 0 && hoy.getDate() < fechaNac.getDate())
+    ) {
+      edad--;
+    }
+
+    if (edad >= 41 && edad <= 45) return "Maxi";
+    if (edad >= 46 && edad <= 50) return "Super";
+    if (edad >= 51 && edad <= 55) return "Master";
+    return "";
   };
 
   const handleFileChange = (e) => {
@@ -191,19 +219,14 @@ export default function PlayerForm() {
           >
             Categoría
           </label>
-          <select
+          <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="categoria"
+            type="text"
             name="categoria"
             value={formData.categoria}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Categoria</option>
-            <option value="maxi">maxi</option>
-            <option value="super">super</option>
-            <option value="master">master</option>
-          </select>
+            readOnly
+          />
         </div>
         <div className="mb-4">
           <label
@@ -212,30 +235,6 @@ export default function PlayerForm() {
           >
             Número de Equipo
           </label>
-          {/* <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="numEquipoFK"
-            type="number"
-            name="numEquipoFK"
-            value={formData.numEquipoFK}
-            onChange={handleChange}
-            required
-          /> */}
-          {/* <select
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="numEquipoFK"
-            name="numEquipoFK"
-            value={formData.numEquipoFK}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Elegir Equipo</option>
-            {equipos?.map((equipo) => {
-              <option value={equipo.NumEquipo}>
-                {equipo.NombreEquipo}
-              </option>;
-            })}
-          </select> */}
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="numEquipoFK"
@@ -259,14 +258,6 @@ export default function PlayerForm() {
           >
             Foto
           </label>
-          {/* <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="foto"
-            type="text"
-            name="foto"
-            onChange={handleFileChange}
-            required
-          /> */}
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="foto"

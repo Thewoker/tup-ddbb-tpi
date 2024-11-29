@@ -69,6 +69,32 @@ export default function TournamentForm() {
             Ingrese el nombre del torneo
           </p>
         </div>
+        {/* 
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="cantidadRuedas"
+          >
+            Cantidad de Ruedas
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="cantidadRuedas"
+            type="number" // Permite solo números
+            name="cantidadRuedas" // Asegúrate de que coincida con la propiedad en formData
+            value={formData.cantidadRuedas} // Usa el estado del formulario
+            onChange={handleChange} // Reutiliza la función de manejo de cambios
+            required
+            min="1" // Asegura que no se acepten valores menores que 1
+            aria-describedby="cantidadRuedasHelp"
+          />
+          <p
+            id="cantidadRuedasHelp"
+            className="text-xs text-gray-500 mt-1"
+          >
+            Ingrese el número de ruedas para el torneo (mínimo 1).
+          </p>
+        </div> */}
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
