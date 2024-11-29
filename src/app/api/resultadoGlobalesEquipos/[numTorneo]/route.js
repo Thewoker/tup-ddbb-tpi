@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getConnection, mssql } from '@/config/conn'
 
-export async function GET(req, { params }) {
+export async function GET(req) {
     try {
         const { numTorneo } = await params
         const pool = await getConnection()

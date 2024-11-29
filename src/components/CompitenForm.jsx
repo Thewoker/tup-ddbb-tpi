@@ -25,7 +25,13 @@ export default function CompitenFormSimple() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/compiten", formData);
+      const response = await axios.post("/api/compiten", formData).then(async () => {
+        const response2 = await axios.post("/api/compiten", {
+          numEncuentroFK: formData.numEncuentroFK,
+          numEquipoFK: formData.numEquipoFK2, 
+          golEquipo: formData.golEquipo2
+        })
+      })
       setMessage("Registro de Compiten creado exitosamente");
       // Limpiar el formulario después de un envío exitoso
       setFormData({
@@ -48,7 +54,7 @@ export default function CompitenFormSimple() {
         const data = await axios.get("/api/encuentro");
         setEncuentro(data?.data?.datos?.recordsets);
         console.log(data);
-      } catch (error) {}
+      } catch (error) { }
     };
     fetchEncuentro();
   }, []);
@@ -58,7 +64,7 @@ export default function CompitenFormSimple() {
         const data = await axios.get("/api/equipos");
         setEquipo(data?.data?.message?.recordsets);
         console.log(data);
-      } catch (error) {}
+      } catch (error) { }
     };
     fetchEquipo();
   }, []);
@@ -76,17 +82,6 @@ export default function CompitenFormSimple() {
           >
             Número de Encuentro
           </label>
-          {/* <input
-            id="numEncuentroFK"
-            type="number"
-            name="numEncuentroFK"
-            value={formData.numEncuentroFK}
-            onChange={handleChange}
-            required
-            min="1"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Ingrese el número del encuentro"
-          /> */}
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="numEncuentroFK"
@@ -113,17 +108,6 @@ export default function CompitenFormSimple() {
           >
             Nombre Equipo
           </label>
-          {/* <input
-            id="numEquipoFK"
-            type="number"
-            name="numEquipoFK"
-            value={formData.numEquipoFK}
-            onChange={handleChange}
-            required
-            min="1"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Ingrese el número del equipo"
-          /> */}
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="numEquipoFK"
@@ -160,6 +144,49 @@ export default function CompitenFormSimple() {
             placeholder="Ingrese la cantidad de goles"
           />
         </div>
+        <div>
+          <label
+            htmlFor="numEquipoFK"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Nombre Equipo
+          </label>
+          <select
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="numEquipoFK2"
+            name="numEquipoFK2"
+            value={formData.numEquipoFK2}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Elegir Equipo</option>
+            {equipo?.[0]?.map((equipo) => (
+              <option key={equipo.NumEquipo} value={equipo.NumEquipo}>
+                {equipo.NombreEquipo}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label
+            htmlFor="golEquipo2"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Goles del Equipo
+          </label>
+          <input
+            id="golEquipo2"
+            type="number"
+            name="golEquipo2"
+            value={formData.golEquipo2}
+            onChange={handleChange}
+            required
+            min="0"
+            max="10"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Ingrese la cantidad de goles"
+          />
+        </div>
         <button
           type="submit"
           disabled={isLoading}
@@ -170,11 +197,10 @@ export default function CompitenFormSimple() {
       </form>
       {message && (
         <div
-          className={`mt-4 p-4 rounded-md ${
-            message.includes("Error")
+          className={`mt-4 p-4 rounded-md ${message.includes("Error")
               ? "bg-red-100 text-red-700"
               : "bg-green-100 text-green-700"
-          }`}
+            }`}
           role="alert"
         >
           <p>{message}</p>
