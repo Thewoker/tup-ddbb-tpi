@@ -8,6 +8,7 @@ export async function GET(req, res) {
         const datos = await pool.request().query('SELECT GETDATE()')
         return NextResponse.json({message:datos})
     } catch (error) {
-        return NextResponse.json(error.message)
+        console.error(error)
+        return NextResponse.json({ error: 'Ha habido un error en la peticion' }, { status: 500 })
     }
 }
