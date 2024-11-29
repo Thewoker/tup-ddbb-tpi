@@ -32,7 +32,7 @@ ORDER BY
     R.NumRueda, 
     E.Fecha;`
         )
-        return NextResponse.json({ message: datos })
+        return NextResponse.json( datos )
     } catch (error) {
         console.error(error)
         return NextResponse.json({ error: 'Ha habido un error en la peticion' }, { status: 500 })

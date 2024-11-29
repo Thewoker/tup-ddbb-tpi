@@ -39,7 +39,7 @@ ORDER BY
     }
 }
 
-export async function POST(req, { params }) {
+export async function POST(req) {
     try {
         const pool = await getConnection()
         const body = await req.json()
